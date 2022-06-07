@@ -35,6 +35,7 @@ public class CovidAppAutoConfig {
 	
 	public CovidAppAutoConfig() throws URISyntaxException, JsonProcessingException {
 		
+		countries= new ArrayList<>();
 		File f = getFile();
 		StringBuilder data = extracted(f);
 	        
@@ -42,7 +43,9 @@ public class CovidAppAutoConfig {
         
         ObjectMapper objectMapper = new ObjectMapper();
 
-		countries = Arrays.asList(objectMapper.readValue(data.toString(), Country[].class));
+        for(Country con: Arrays.asList(objectMapper.readValue(data.toString(), Country[].class))) {
+        	countries.add(con);
+        }
 
 	}
 
@@ -86,15 +89,17 @@ public class CovidAppAutoConfig {
 		boolean exist = true;
 		
 		for(Country country: countries) {
-			if(country.getNameCountry().trim().equals(city.getNameCountry().trim())) {
+			if(country.getNameCountry().toUpperCase().trim().equals(city.getNameCountry().toUpperCase().trim())) {
 				exist = existRegion(country, city);
 				break;
 			}
 			else {
-				countries.add(country.create(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation())));
 				exist = false;
-				break;
 			}
+		}
+		
+		if(!exist) {
+			countries.add(Country.create(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation())));
 		}
 		
 		return exist;
@@ -105,17 +110,13 @@ public class CovidAppAutoConfig {
 
 		boolean exist = true;
 		
-		for(Region region: country.getRegions()) {
-			if(region.getNameRegion().trim().equals(city.getNameRegion().trim())) {
-				exist = existCity(region, city);
-				break;
-			}
-			else {
-				country.addRegion(city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation()));
-				exist = false;
-				break;
-			}
-			
+		Region reg= getRegion(city.getNameRegion());
+		if(reg!=null) {
+			exist = existCity(reg, city);
+		}
+		else {
+			country.addRegion(city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation()));
+			exist = false;
 		}
 		
 		return exist;
@@ -147,7 +148,7 @@ public class CovidAppAutoConfig {
 		for(Country countri: countries) {
 			for(Region region: countri.getRegions()) {
 				for(City citi: region.getCities()) {
-					if(city.trim().equals(citi.getNameCity().trim())) {
+					if(city.toUpperCase().trim().equals(citi.getNameCity().toUpperCase().trim())) {
 						cit=citi; 
 						break;
 					}
@@ -164,7 +165,7 @@ public class CovidAppAutoConfig {
 		
 		for(Country countri: countries) {
 			for(Region regi: countri.getRegions()) {
-					if(regi.getNameRegion().trim().equals(region.trim())) {
+					if(regi.getNameRegion().toUpperCase().trim().equals(region.toUpperCase().trim())) {
 						reg=regi; 
 						break;
 				}
@@ -199,7 +200,7 @@ public class CovidAppAutoConfig {
 		
 		for(Country countri: countries) {
 			for(Region regi: countri.getRegions()) {
-					if(regi.getNameRegion().trim().equals(targetName.trim())) {
+					if(regi.getNameRegion().toUpperCase().trim().equals(targetName.toUpperCase().trim())) {
 						count=countri; 
 						break;
 				}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 
 import com.app.covid.controller.model.IncidenceInput;
 import com.app.covid.controller.model.NewCityInput;
@@ -31,10 +32,12 @@ public class CovidAppController {
 	}
 	
 	@PostMapping("/addIncidence")
-	public void addIncidence ( @RequestBody IncidenceInput input ) {
+	public void addIncidence ( @RequestBody IncidenceInput input ) throws RestClientException {
 		
-		service.addIncidenceToCity(input.getCity(), input);
-	
+		if(!service.addIncidenceToCity(input.getCity(), input)) {
+			throw new RestClientException("The city doesn't exists already");
+		}
+
 	}
 	
 	@GetMapping("/values")

@@ -40,40 +40,45 @@ public class CovidAppServiceImpl implements CovidAppService {
 	}
 
 	@Override
-	public void addIncidenceToCity(String city, IncidenceInput incidence) {
+	public boolean addIncidenceToCity(String city, IncidenceInput incidence) {
 		City citi= config.getCity(city);
 		if(citi==null) {
-			throw new RestClientException("The city doesn't exists already");
+			return false;
 		}
 		else {
 			citi.addIncidence(incidence);
+			return true;
 		}
 	}
 
 	@Override
 	public BigDecimal calculateIncidence(SearchInput input) {
-		int resultado=0;
+		double resultado=0;
 		if(input.isByRegion()) {
 			resultado = calculeIncidenceByRegion(config.getCitiesByRegion(input.getTargetName(), input.getDateInit(), input.getDateEnd()));
 		}
 		else {
-			resultado= getTotalByCity(config.getIncidenceOfcity(input.getTargetName(), input.getDateInit(), input.getDateEnd()));
+			City ci= config.getCity(input.getTargetName());
+			resultado= getTotalByCity(config.getIncidenceOfcity(input.getTargetName(), input.getDateInit(), input.getDateEnd())) * ci.getNpopulation() / 100000d;
 		}
 		
-		return new BigDecimal(resultado);
+		return BigDecimal.valueOf(resultado);
 		
 	}
 
-	private int calculeIncidenceByRegion(List<City> citiesByRegion) {
-		int totalbyregion=0;
+	private double calculeIncidenceByRegion(List<City> citiesByRegion) {
+		int totalInfectadosbyregion=0;
+		int totalAfectadosbyregion=0;
 		for(City citi: citiesByRegion) {
-			totalbyregion+= getTotalByCity(citi.getIncidences());
+			totalInfectadosbyregion+= getTotalByCity(citi.getIncidences());
+			totalAfectadosbyregion+= citi.getNpopulation();
 		}
 		
-		return totalbyregion;
+		return totalInfectadosbyregion * totalAfectadosbyregion / 100000d;
 	}
 
-	private int getTotalByCity(List<Incidence> incidences) {		
+	private int getTotalByCity( List<Incidence> incidences) {		
+		
 		int totalbyCity=0;
 		
 		if(incidences==null) {

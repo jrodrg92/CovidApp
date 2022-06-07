@@ -17,7 +17,7 @@ public interface CovidAppService {
 
 	List<Country> getAllDAta();
 
-	void addIncidenceToCity(String city, IncidenceInput incidence);
+	boolean addIncidenceToCity(String city, IncidenceInput incidence);
 
 	BigDecimal calculateIncidence(SearchInput input);
 

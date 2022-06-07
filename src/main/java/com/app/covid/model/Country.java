@@ -25,7 +25,7 @@ public class Country implements Serializable{
 	@JsonProperty
 	private List<Region> regions;
 
-	public Country create(String nameCountry, String nameRegion, String nameCity, Integer nPopulation) {
+	public static Country create(String nameCountry, String nameRegion, String nameCity, Integer nPopulation) {
 		Country country= new Country();
 		List<Region> region= new ArrayList<>();
 		List<City> city= new ArrayList<>();
