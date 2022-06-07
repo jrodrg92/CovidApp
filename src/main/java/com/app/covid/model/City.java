@@ -1,18 +1,42 @@
 package com.app.covid.model;
 
-import lombok.Data;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.app.covid.controller.model.IncidenceInput;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-public class City {
+@AllArgsConstructor
+public class City implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9126875998711064866L;
 
-	private String country;
+	@JsonProperty
+	private String nameCity;
 	
-	private String region;
+	@JsonProperty
+	private int npopulation;
 	
-	private String cityName;
-	
-	private Integer nPopulation;
+	@JsonProperty
+	private List<Incidence> incidences;
+
+	public void addIncidence(IncidenceInput incidence) {
+		if(incidences==null) {
+			incidences= new ArrayList<>();
+		}
+		incidences.add(new Incidence(Integer.parseInt(incidence.getNincidence()), incidence.getIncidenceDate()));
+	}
 	
 }
