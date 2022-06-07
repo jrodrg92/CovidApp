@@ -1,5 +1,6 @@
 package com.app.covid.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Region{
+public class Region implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6185452501056495657L;
 
 	@JsonProperty
 	private String nameRegion;
@@ -20,9 +26,8 @@ public class Region{
 	@JsonProperty
 	private List<City> cities;
 
-	public void addCity(String nameCountry, String nameRegion, String nameCity, Integer nPopulation) {
-		// TODO Auto-generated method stub
-		List<Incidence> incidences= new ArrayList<Incidence>();
+	public void addCity(String nameCity, Integer nPopulation) {
+		List<Incidence> incidences= new ArrayList<>();
 		cities.add(new City(nameCity, nPopulation, incidences));
 	}
 

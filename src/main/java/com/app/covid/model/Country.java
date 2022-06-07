@@ -26,12 +26,10 @@ public class Country implements Serializable{
 	private List<Region> regions;
 
 	public Country create(String nameCountry, String nameRegion, String nameCity, Integer nPopulation) {
-		
-		// TODO Auto-generated method stub
 		Country country= new Country();
-		List<Region> region= new ArrayList<Region>();
-		List<City> city= new ArrayList<City>();
-		List<Incidence> incidences= new ArrayList<Incidence>();
+		List<Region> region= new ArrayList<>();
+		List<City> city= new ArrayList<>();
+		List<Incidence> incidences= new ArrayList<>();
 
 		if(nameRegion==null || nameRegion.length()==0) {
 			nameRegion = nameCity;
@@ -47,42 +45,28 @@ public class Country implements Serializable{
 	}
 
 
-	public void addRegion(String nameCountry, String nameRegion, String nameCity, Integer nPopulation) {
-		// TODO Auto-generated method stub
-		List<City> city= new ArrayList<City>();
-		List<Incidence> incidences= new ArrayList<Incidence>();
+	public void addRegion(String nameRegion, String nameCity, Integer nPopulation) {
+		List<City> city= new ArrayList<>();
+		List<Incidence> incidences= new ArrayList<>();
 
 		if(nameRegion==null || nameRegion.length()==0) {
 			nameRegion = nameCity;
 		}
 		
 		city.add(new City(nameCity, nPopulation, incidences));
-		this.regions.add(new Region(nameCountry, city));
+		this.regions.add(new Region(nameRegion, city));
 	}
 
 
-	public List<City> getIncidenceBydate(Region reg, Date dateInit, Date dateEnd) {
-		// TODO Auto-generated method stub
-		
-		List<City> citiesByRegion = new ArrayList<City>();
+	public List<City> getIncidenceBydate(Region reg, Date dateInit, Date dateEnd) {		
+		List<City> citiesByRegion = new ArrayList<>();
 		
 		for(Region region: this.regions) {
 			if(region.equals(reg)) {
 				
-				region.getCities().forEach(citi -> {
-					
-					List<Incidence> date =  new ArrayList<Incidence>();
-					
-					if(citi.getIncidences()!=null) {
-						for(Incidence inc: citi.getIncidences()) {
-							if(dateInit.getTime()<=inc.getFecha().getTime() && dateEnd.getTime()>=inc.getFecha().getTime()) {
-								date.add(inc);
-							}
-						}
-						citiesByRegion.add(new City(citi.getNameCity(), citi.getNpopulation(), date));
-					}
-					
-				});				
+				region.getCities().forEach(citi -> 	
+					createIncidencesperCity(dateInit, dateEnd, citiesByRegion, citi)
+				);	
 				
 			}
 		}
@@ -92,8 +76,21 @@ public class Country implements Serializable{
 	}
 
 
+	private void createIncidencesperCity(Date dateInit, Date dateEnd, List<City> citiesByRegion, City citi) {
+		List<Incidence> date =  new ArrayList<>();
+		
+		if(citi.getIncidences()!=null) {
+			for(Incidence inc: citi.getIncidences()) {
+				if(dateInit.getTime()<=inc.getFecha().getTime() && dateEnd.getTime()>=inc.getFecha().getTime()) {
+					date.add(inc);
+				}
+			}
+			citiesByRegion.add(new City(citi.getNameCity(), citi.getNpopulation(), date));
+		}
+	}
+
+
 	public List<Region> getRegions() {
-		// TODO Auto-generated method stub
 		return regions;
 	}
 	

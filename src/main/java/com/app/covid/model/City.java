@@ -1,5 +1,6 @@
 package com.app.covid.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class City {
+public class City implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9126875998711064866L;
+
 	@JsonProperty
 	private String nameCity;
 	
@@ -25,9 +31,8 @@ public class City {
 	private List<Incidence> incidences;
 
 	public void addIncidence(IncidenceInput incidence) {
-		// TODO Auto-generated method stub
 		if(incidences==null) {
-			incidences= new ArrayList<Incidence>();
+			incidences= new ArrayList<>();
 		}
 		incidences.add(new Incidence(Integer.parseInt(incidence.getNincidence()), incidence.getIncidenceDate()));
 	}

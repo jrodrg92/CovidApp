@@ -13,6 +13,7 @@ import com.app.covid.controller.model.NewCityInput;
 import com.app.covid.controller.model.SearchInput;
 import com.app.covid.model.City;
 import com.app.covid.model.Country;
+import com.app.covid.model.Incidence;
 import com.app.covid.service.CovidAppService;
 
 @Service
@@ -22,12 +23,11 @@ public class CovidAppServiceImpl implements CovidAppService {
 	private CovidAppAutoConfig config;
 	
 	public CovidAppServiceImpl() {
-		
+		/**/
 	}
 	
 	@Override
 	public void addCityAsJson(NewCityInput city) {
-		// TODO Auto-generated method stub
 		if(config.exist(city)) {
 			throw new RestClientException("The city exists already");
 		}
@@ -36,13 +36,11 @@ public class CovidAppServiceImpl implements CovidAppService {
 
 	@Override
 	public List<Country> getAllDAta() {
-		// TODO Auto-generated method stub
 		return config.getAllData();
 	}
 
 	@Override
 	public void addIncidenceToCity(String city, IncidenceInput incidence) {
-		// TODO Auto-generated method stub
 		City citi= config.getCity(city);
 		if(citi==null) {
 			throw new RestClientException("The city doesn't exists already");
@@ -54,19 +52,39 @@ public class CovidAppServiceImpl implements CovidAppService {
 
 	@Override
 	public BigDecimal calculateIncidence(SearchInput input) {
-		// TODO Auto-generated method stub
-
+		int resultado=0;
 		if(input.isByRegion()) {
-			calculeIncidenceByRegion(config.getCitiesByRegion(input.getTargetName(), input.getDateInit(), input.getDateEnd()));
+			resultado = calculeIncidenceByRegion(config.getCitiesByRegion(input.getTargetName(), input.getDateInit(), input.getDateEnd()));
+		}
+		else {
+			resultado= getTotalByCity(config.getIncidenceOfcity(input.getTargetName(), input.getDateInit(), input.getDateEnd()));
 		}
 		
-		return null;
+		return new BigDecimal(resultado);
 		
 	}
 
-	private void calculeIncidenceByRegion(Object citiesByRegion) {
-		// TODO Auto-generated method stub
+	private int calculeIncidenceByRegion(List<City> citiesByRegion) {
+		int totalbyregion=0;
+		for(City citi: citiesByRegion) {
+			totalbyregion+= getTotalByCity(citi.getIncidences());
+		}
 		
+		return totalbyregion;
+	}
+
+	private int getTotalByCity(List<Incidence> incidences) {		
+		int totalbyCity=0;
+		
+		if(incidences==null) {
+			return 0;
+		}
+		
+		for(Incidence inc: incidences) {
+			totalbyCity+=inc.getNincidence();
+		}
+		
+		return totalbyCity;
 	}
 	
 
