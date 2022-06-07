@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,7 @@ import com.app.covid.service.CovidAppService;
 
 @RestController
 @RequestMapping("/covid/incidence")
-public class CovidAppController {
+public class CovidAppController<T> {
 
 	@Autowired(required = false)
 	private CovidAppService service;
@@ -32,10 +34,13 @@ public class CovidAppController {
 	}
 	
 	@PostMapping("/addIncidence")
-	public void addIncidence ( @RequestBody IncidenceInput input ) throws RestClientException {
+	public ResponseEntity<T> addIncidence ( @RequestBody IncidenceInput input ) throws RestClientException {
 		
 		if(!service.addIncidenceToCity(input.getCity(), input)) {
-			throw new RestClientException("The city doesn't exists already");
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		}
 
 	}
