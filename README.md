@@ -106,3 +106,14 @@ Esta aplicacion es una prueba de un gestor de incidencias de coronavirus por ciu
 ]
 
 Con estos datos se levantara la aplicacion, aunque se podran añadir nuevos utilizando los servicios creados.
+
+
+Respuesta pregunta:
+
+Dado que el servicio web para la consulta de tasa de incidencia de coronavirus
+hay previsión que lo usarán desde todos los países de Europa, esperamos
+cientos de miles de peticiones a lo largo del día y necesitamos que las
+consultas sean muy rápidas (<400 ms por request/response), explicar (no hay
+que implementar) como se podría cumplir con este objetivo.
+
+habria que aumentar el numero de contenedores disponibles (PODs) en cada una de las regiones de europa que nos permita la plataforma cloud que usemos.
