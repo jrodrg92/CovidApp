@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "20f599d1-719c-4151-8738-c36fcb8484b0",
+		"name": "Pruebas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "values",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/covid/incidence/values",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addCity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameCountry\": \"Spain\",\r\n    \"nameRegion\": \"Andalucia\",\r\n    \"nameCity\": \"Granada\",\r\n    \"npopulation\": \"500000\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/covid/incidence/addCity",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"addCity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addRegion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameCountry\": \"Spain\",\r\n    \"nameRegion\": \"Madrid\",\r\n    \"nameCity\": \"Madrid\",\r\n    \"npopulation\": \"10000000\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/covid/incidence/addCity",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"addCity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addCountry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameCountry\": \"EEUU\",\r\n    \"nameRegion\": \"California\",\r\n    \"nameCity\": \"Los Angeles\",\r\n    \"npopulation\": \"10000000\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/covid/incidence/addCity",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"addCity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addIncidence",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"city\": \"Malaga\",\r\n    \"incidenceDate\":  \"2021-12-17\",\r\n    \"nincidence\": \"30\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/covid/incidence/addIncidence",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"addIncidence"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calculate byRegion",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"byRegion\": true,\r\n    \"dateInit\":  \"2021-12-11\",\r\n    \"dateEnd\":  \"2021-12-19\",\r\n    \"targetName\": \"Andalucia\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/covid/incidence/calculate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"calculate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calculate byCity",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"byRegion\": false,\r\n    \"dateInit\":  \"2021-12-11\",\r\n    \"dateEnd\":  \"2021-12-15\",\r\n    \"targetName\": \"Malaga\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/covid/incidence/calculate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"covid",
+						"incidence",
+						"calculate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
