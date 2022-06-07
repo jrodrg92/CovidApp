@@ -1,5 +1,6 @@
 package com.app.covid.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.app.covid.controller.model.IncidenceInput;
@@ -18,14 +19,17 @@ public class City {
 	private String nameCity;
 	
 	@JsonProperty
-	private Integer nPopulation;
+	private int npopulation;
 	
 	@JsonProperty
 	private List<Incidence> incidences;
 
 	public void addIncidence(IncidenceInput incidence) {
 		// TODO Auto-generated method stub
-		incidences.add(new Incidence(incidence.getNIncidence(), incidence.getIncidenceDate()));
+		if(incidences==null) {
+			incidences= new ArrayList<Incidence>();
+		}
+		incidences.add(new Incidence(Integer.parseInt(incidence.getNincidence()), incidence.getIncidenceDate()));
 	}
 	
 }

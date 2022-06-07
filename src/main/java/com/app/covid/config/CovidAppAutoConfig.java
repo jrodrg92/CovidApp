@@ -6,7 +6,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +69,15 @@ public class CovidAppAutoConfig {
 			}
         }
 	}
+	
+	/**
+	 * 
+	 * @return all the cities with their data
+	 */
+	public List<Country> getAllData() {
+		// TODO Auto-generated method stub
+		return countries;
+	}
 
 	public boolean exist(NewCityInput city) {
 
@@ -78,7 +89,7 @@ public class CovidAppAutoConfig {
 				break;
 			}
 			else {
-				countries.add(country.create(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), city.getNPopulation()));
+				countries.add(country.create(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation())));
 				exist = false;
 				break;
 			}
@@ -98,7 +109,7 @@ public class CovidAppAutoConfig {
 				break;
 			}
 			else {
-				country.addRegion(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), city.getNPopulation());
+				country.addRegion(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation()));
 				exist = false;
 				break;
 			}
@@ -115,24 +126,20 @@ public class CovidAppAutoConfig {
 		boolean exist = true;
 		
 		int cont = 0;
-		for(City citi: region.getCities()) {
-			if(!citi.getNameCity().trim().equals(city.getNameCity().trim()) && cont== region.getCities().size()) {
-				region.addCity(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), city.getNPopulation());
-				exist = false;
-				break;
-			}
-			else {
-				cont++;
-			}
+			
+		City cit= region.getCityByName(city.getNameCity());
+		
+		if(cit != null) {
+			exist=true;
 		}
+		else {
+			region.addCity(city.getNameCountry(), city.getNameRegion(), city.getNameCity(), Integer.parseInt(city.getNpopulation()));
+			exist = false;
+		}	
+		
 		
 		return exist;
 		
-	}
-
-	public List<Country> getAllData() {
-		// TODO Auto-generated method stub
-		return countries;
 	}
 
 	public City getCity(String city) {
@@ -152,6 +159,55 @@ public class CovidAppAutoConfig {
 		}
 		
 		return cit;
+	}
+	
+	public Region getRegion(String region) {
+		// TODO Auto-generated method stub
+		
+		Region reg= null;
+		
+		for(Country countri: countries) {
+			for(Region regi: countri.getRegions()) {
+					if(regi.getNameRegion().trim().equals(region.trim())) {
+						reg=regi; 
+						break;
+				}
+			}
+		}
+		
+		return reg;
+	}
+
+	public Object getCitiesByRegion(String targetName, Date dateInit, Date dateEnd) {
+		// TODO Auto-generated method stub
+		Country country= getCountryByReg(targetName);
+		Region reg= getRegion(targetName);
+		if(reg==null) {
+			throw new RestClientException("The Region doesn't exists already");
+		}
+		if(dateEnd==null) {
+			country.getIncidenceBydate(reg, dateInit, dateInit);
+		}
+		else {
+			country.getIncidenceBydate(reg, dateInit, dateEnd);
+		}
+		
+		return null;
+	}
+
+	private Country getCountryByReg(String targetName) {
+		Country count= null;
+		
+		for(Country countri: countries) {
+			for(Region regi: countri.getRegions()) {
+					if(regi.getNameRegion().trim().equals(targetName.trim())) {
+						count=countri; 
+						break;
+				}
+			}
+		}
+		
+		return count;
 	}	
 	
 }

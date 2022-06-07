@@ -15,6 +15,6 @@ public class NewCityInput {
 	
 	private String nameCity;
 			
-	private Integer nPopulation;
+	private String npopulation;
 	
 }

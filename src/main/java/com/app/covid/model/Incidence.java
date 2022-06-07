@@ -9,12 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Incidence {
 
 	@JsonProperty
-	private Integer nInfected;
+	private Integer nincidence;
 	
 	@JsonProperty
 	private Date fecha;

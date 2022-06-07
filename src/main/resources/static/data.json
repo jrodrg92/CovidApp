@@ -7,11 +7,37 @@
 				"cities":[
 					{
 						"nameCity": "Malaga",
-						"nPopulation": 577405
+						"npopulation": 577405,
+						 "incidences": [
+                            {
+                                "nincidence": 300,
+                                "fecha": "2021-12-11T00:00:00.000+00:00"
+                            },
+                            {
+                                "nincidence": 150,
+                                "fecha": "2021-12-12T00:00:00.000+00:00"
+                            },
+                            {
+                                "nincidence": 100,
+                                "fecha": "2021-12-13T00:00:00.000+00:00"
+                            },
+                            {
+                                "nincidence": 50,
+                                "fecha": "2021-12-14T00:00:00.000+00:00"
+                            },
+                            {
+                                "nincidence": 30,
+                                "fecha": "2021-12-15T00:00:00.000+00:00"
+                            },
+                            {
+                                "nincidence": 10,
+                                "fecha": "2021-12-16T00:00:00.000+00:00"
+                            }
+                        ]
 					},
 					{
 						"nameCity": "Sevilla",
-						"nPopulation": 684234
+						"npopulation": 684234
 					}
 				]
 			},
@@ -20,15 +46,15 @@
 				"cities":[
 					{
 						"nameCity": "Leon",
-						"nPopulation": 122051
+						"npopulation": 122051
 					},
 					{
 						"nameCity": "Zamora",
-						"nPopulation": 60988
+						"npopulation": 60988
 					},
 					{
 						"nameCity": "Salamanca",
-						"nPopulation": 143269
+						"npopulation": 143269
 					}
 				]
 			},
@@ -37,19 +63,19 @@
 				"cities":[
 					{
 						"nameCity": "Barcelona",
-						"nPopulation": 1660314
+						"npopulation": 1660314
 					},
 					{
 						"nameCity": "Gerona",
-						"nPopulation": 101932
+						"npopulation": 101932
 					},
 					{
 						"nameCity": "Tarragona",
-						"nPopulation": 135426
+						"npopulation": 135426
 					},
 					{
 						"nameCity": "Lerida",
-						"nPopulation": 140080
+						"npopulation": 140080
 					}
 				]
 			}
@@ -63,11 +89,11 @@
 				"cities":[
 					{
 						"nameCity": "Munich",
-						"nPopulation": 1561094
+						"npopulation": 1561094
 					},
 					{
 						"nameCity": "Nuremberg",
-						"nPopulation": 518365
+						"npopulation": 518365
 					}
 				]
 			}

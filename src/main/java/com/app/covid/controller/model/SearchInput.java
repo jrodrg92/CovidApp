@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Getter
-@NoArgsConstructor
-public class IncidenceInput {
+@NoArgsConstructor	
+public class SearchInput {
 
-	private String city;
+	private Date dateInit;
 	
-	private Date incidenceDate;
+	private Date dateEnd;
 	
-	private String nincidence;
+	private boolean byRegion;
+	
+	private String targetName;	
 	
 }
