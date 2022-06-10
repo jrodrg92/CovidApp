@@ -7,7 +7,6 @@ pipeline {
     }
     stages {
 	    stage('SCM checkout'){
-			echo"pulling changes from the branch ${params.branch}"
 			git url:'https://github.com/javahometech/myweb', branch: "${params.branch}"
 		}
 
