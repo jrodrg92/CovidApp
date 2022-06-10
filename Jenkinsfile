@@ -1,7 +1,9 @@
 pipeline {
 	stages {
 	  stage('SCM') {
-	    checkout scm
+	  	steps {
+	    	checkout scm
+	    }
 	  }
 	  stage('Build') { 
 	    steps {
@@ -10,8 +12,10 @@ pipeline {
 	  }
 	  stage('SonarQube Analysis') {
 	    def mvn = tool 'maven';
-	    withSonarQubeEnv() {
-	      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=pruebagit"
+	    steps {
+		    withSonarQubeEnv() {
+		      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=pruebagit"
+		    }
 	    }
 	  }
 	  stage("Quality Gate"){
