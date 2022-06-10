@@ -4,12 +4,11 @@ node {
   }
   stage('build & SonarQube analysis') {
       node {
-          withSonarQubeEnv('sonarscanner') {
-          	 def mvn = tool 'maven';
-             sh 'mvn clean package sonar:sonar'
-          
+	    	def mvn = tool 'maven';
+		    withSonarQubeEnv() {
+		      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=pruebagit"
+		    }
       }
-    }
   }
   stage('Quality Gate'){
       timeout(time: 1, unit: 'HOURS') {
