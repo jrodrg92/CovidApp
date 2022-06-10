@@ -5,6 +5,7 @@ node {
   stage('build & SonarQube analysis') {
       node {
           withSonarQubeEnv('sonarscanner') {
+          	 def mvn = tool 'maven';
              sh 'mvn clean package sonar:sonar'
           
       }
