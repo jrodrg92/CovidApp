@@ -2,6 +2,11 @@ node {
   stage('SCM') {
     checkout scm
   }
+  stage('Build') { 
+    steps {
+        sh 'mvn -B -DskipTests clean package' 
+    }
+  }
   stage('SonarQube Analysis') {
     def mvn = tool 'maven';
     withSonarQubeEnv() {
