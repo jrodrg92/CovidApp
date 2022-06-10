@@ -6,7 +6,7 @@ node {
       node {
 	    	def mvn = tool 'maven';
 		    withSonarQubeEnv() {
-		      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=pruebagit"
+		      sh "${mvn}/bin/mvn clean package sonar:sonar -Dsonar.projectKey=pruebagit"
 		    }
       }
   }
@@ -17,5 +17,9 @@ node {
               error "Pipeline aborted due to quality gate failure: ${qg.status}"
           }
       }
+  }
+  stage('Deploy') {
+      echo 'Deploying....'
+          
   }
 }
