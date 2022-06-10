@@ -6,9 +6,11 @@ pipeline {
         }
     }
     stages {
-	    stage('SCM checkout'){
-			git url:'https://github.com/javahometech/myweb', branch: "${params.branch}"
-		}
+	    stage('Build') { 
+            steps {
+                sh 'mvn -B -DskipTests clean package' 
+            }
+        }
 
     }
 }
