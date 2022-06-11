@@ -1,24 +1,47 @@
-node {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('build & SonarQube analysis') {
-      node {
-	    	def mvn = tool 'maven';
-		    withSonarQubeEnv() {
-		      sh "${mvn}/bin/mvn clean package sonar:sonar -Dsonar.projectKey=pruebagit"
-		    }
-      }
-  }
-  stage('Quality Gate'){
-      timeout(time: 1, unit: 'HOURS') {
-          def qg = waitForQualityGate()
-          if (qg.status != 'OK') {
-              error "Pipeline aborted due to quality gate failure: ${qg.status}"
+@@ -0,0 +1,46 @@
+pipeline {
+    agent {
+        docker {
+            image 'maven:3.8.1-adoptopenjdk-11' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'mvn -B -DskipTests clean package' 
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('sonarscanner') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
           }
-      }
-  }
-  stage('Deploy') {
-      echo 'Deploying....'   
-  }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    }
 }
