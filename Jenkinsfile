@@ -6,7 +6,7 @@ node {
       node {
 	    	def mvn = tool 'maven';
 		    withSonarQubeEnv() {
-		      sh "${mvn}/bin/mvn clean package sonar:sonar -Dsonar.projectKey=pruebagit"
+		      sh "${mvn}\bin\mvn clean package sonar:sonar -Dsonar.projectKey=pruebagit"
 		    }
       }
   }
