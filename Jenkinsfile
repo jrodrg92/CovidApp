@@ -29,5 +29,11 @@ pipeline {
                                 -Dsonar.login=sqa_b52bc1b3c1aae81af93b19b146841df6d354538e'
             }
         }
+        stage('Docker Build') {
+        	agent any
+            steps {
+             	sh 'docker build -t shanem/spring-petclinic:latest .'
+            }
+        }
     }
 }
