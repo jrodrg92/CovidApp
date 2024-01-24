@@ -24,8 +24,8 @@ pipeline {
             agent any
             steps {
                 sh 'mvn clean install -X sonar:sonar \
-                                -Dsonar.projectKey=MyFirstTest\
-                                -Dsonar.host.url=http://localhost:9000\
+                                -Dsonar.projectKey=MyFirstTest \
+                                -Dsonar.host.url=http://localhost:9000 \
                                 -Dsonar.login=sqa_b52bc1b3c1aae81af93b19b146841df6d354538e'
             }
           }
