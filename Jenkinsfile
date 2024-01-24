@@ -23,7 +23,10 @@ pipeline {
         stage("build & SonarQube analysis") {
             agent any
             steps {
-                sh 'mvn clean package sonar:sonar'
+                sh 'mvn clean install -X sonar:sonar \
+                                -Dsonar.projectKey=MyFirstTest\
+                                -Dsonar.host.url=http://localhost:9000\
+                                -Dsonar.login=sqa_b52bc1b3c1aae81af93b19b146841df6d354538e'
             }
           }
     }
