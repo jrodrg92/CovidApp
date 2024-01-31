@@ -27,7 +27,7 @@ pipeline {
             agent any
             steps {
                 sh 'mvn -X sonar:sonar \
-                                -Dsonar.projectKey=MyFirstTest \
+                                -Dsonar.projectKey=covid \
                                 -Dsonar.host.url=http://192.168.1.143:9000 \
                                 -Dsonar.login=sqa_b52bc1b3c1aae81af93b19b146841df6d354538e'
             }
