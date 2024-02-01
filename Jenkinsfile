@@ -3,6 +3,7 @@ pipeline {
     tools {
         maven 'maven 3.9.6'
         jdk 'Java 1.11'
+        docker 'docker'
     }
     options {
         skipStagesAfterUnstable()
