@@ -38,7 +38,7 @@ pipeline {
         stage('Docker Build') {
         	agent any
             steps {
-             	sh 'docker --version'
+             	sh 'docker build -t shanem/spring-petclinic:latest .'
             }
         }
     }
